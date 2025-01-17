@@ -1,8 +1,8 @@
 module SpendingTracker
 
-go 1.21
+go 1.23.4
 
-toolchain go1.23.2
+// toolchain go1.23.2
 
 require github.com/wailsapp/wails/v2 v2.9.2
 

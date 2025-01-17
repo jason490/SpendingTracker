@@ -1,13 +1,48 @@
 {
   "name": "SpendingTracker",
-  "outputfilename": "SpendingTracker",
-  "frontend:install": "npm install",
+  "assetdir": "./frontend/dist",
   "frontend:build": "npm run build",
+  "frontend:install": "npm install",
+  "frontend:dev": "",
+  "frontend:dev:build": "",
+  "frontend:dev:install": "",
   "frontend:dev:watcher": "npm run dev",
   "frontend:dev:serverUrl": "auto",
-  "assetdir": "./frontend/dist",
-  "author": {
+  "wailsjsdir": "/home/jassno/Documents/SpendingTracker/frontend",
+  "version": "2",
+  "projectdir": "/home/jassno/Documents/SpendingTracker",
+  "build:dir": "build",
+  "outputfilename": "SpendingTracker",
+  "OutputType": "",
+  "Platform": "",
+  "runNonNativeBuildHooks": false,
+  "postBuildHooks": null,
+  "preBuildHooks": null,
+  "Author": {
     "name": "Jason Ng",
     "email": "jng632121@gmail.com"
+  },
+  "Info": {
+    "companyName": "SpendingTracker",
+    "productName": "SpendingTracker",
+    "productVersion": "1.0.0",
+    "copyright": "Copyright.........",
+    "comments": "Built using Wails (https://wails.io)",
+    "fileAssociations": null,
+    "protocols": null
+  },
+  "debounceMS": 100,
+  "devServer": "localhost:34115",
+  "appargs": "",
+  "nsisType": "multiple",
+  "obfuscated": false,
+  "garbleargs": "",
+  "frontend:dir": "frontend",
+  "bindings": {
+    "ts_generation": {
+      "prefix": "",
+      "suffix": "",
+      "outputType": ""
+    }
   }
 }
