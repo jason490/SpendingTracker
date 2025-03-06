@@ -1,1 +1,1 @@
-# SpendingTrackerServer
+# SpendingTracker
