@@ -1,0 +1,12 @@
+services:  
+  app:
+    environment:
+      CGO_ENABLED: 1
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8080"
+    volumes:
+      - ./server:/app/
+      - /app/database
