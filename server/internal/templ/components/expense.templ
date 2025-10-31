@@ -1,0 +1,48 @@
+package components
+
+templ AddExpense() {
+	<div class="card" style="width: 20rem;">
+		<form hx-post="/post/addExpense" class="form-control card-body" id="addExpense" hx-swap="innerHTML">
+			<h5 class="card-title">Add Expense</h5>
+			<label for="expenseName" class="form-label">Name</label>
+			<input
+				type="text"
+				name="name"
+				id="expenseName"
+				placeholder="Expense Name"
+				class="form-control"
+				required
+			/>
+			<label for="expenseCost" class="form-label">Expense Cost</label>
+			<input
+				type="number"
+				name="cost"
+				id="expenseCost"
+				placeholder="0.0"
+				class="form-control"
+				required
+			/>
+			<div class="mt-2">
+				<button type="submit" class="btn btn-primary">Add Expense</button>
+			</div>
+		</form>
+	</div>
+}
+
+templ TotalSpentThisMonth(spent uint) {
+	<div class="card" style="width: 20rem;" hx-get="" hx-trigger="from:#addExpense">
+		<h5 class="card-title">Total Spent This Month</h5>
+		<h6 class="card-title">{ spent }</h6>
+	</div>
+}
+
+templ TotalSpent(spent uint) {
+	<div>
+		<h2>Total Spent</h2>
+		<h3>{ spent }</h3>
+	</div>
+}
+
+templ AllExpenses() {
+	<div></div>
+}

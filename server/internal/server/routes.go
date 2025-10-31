@@ -13,6 +13,13 @@ type Test struct {
 
 func (s *Server) AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
+		// var test Test = Test{
+		// 	Name: "Hello",
+		// 	Test: "World!",
+		// }
+		// c.Set("User", test)
+		// val := c.Get("User")
+		// Verify api key first
 		// cookie, err := c.Cookie("Tutorfi_Account")
 		// if err != nil {
 		// 	return c.Redirect(302, "/login")
@@ -33,16 +40,10 @@ func (s *Server) AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
-func (s *Server) routes() error {
-	var test Test = Test{
-		Name: "Hello",
-		Test: "World!",
-	}
-	s.e.GET("/", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, test)
-	})
+func (s *Server) routes() {
 	e := s.e.Group("/api", s.AuthMiddleware)
 
+	e.POST("/post/login", s.postLogin)
 	e.POST("/post/createUser", s.postCreateUser)
 	e.POST("/post/addExpense", s.postAddExpense)
 	e.POST("/post/changeExpense", s.postChangeExpense)
@@ -53,15 +54,6 @@ func (s *Server) routes() error {
 	e.GET("/get/allTags", s.getAllTags)
 	e.GET("/get/allExpenses", s.getAllExpenses)
 	e.GET("/get/totalExpense", s.getTotalExpense)
-	return nil
-}
-
-func (s *Server) postCreateUser( c echo.Context ) error {
-	var test Test = Test{
-		Name: "Hello",
-		Test: "World!",
-	}
-	return c.JSON(http.StatusOK, test)
 }
 
 func (s *Server) postAddExpense( c echo.Context ) error {
