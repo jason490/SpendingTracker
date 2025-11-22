@@ -90,7 +90,7 @@ func (f *Frontend) routes(){
 	e.GET("/get/allTags", f.getAllTags)
 	e.GET("/get/allExpenses", f.getAllExpenses)
 	e.GET("/get/totalExpense", f.getTotalExpense)
-	e.GET("/get/monthExpense", f.getTotalExpense)
+	e.GET("/get/monthExpense", f.getMonthExpense)
 
 	f.e.Static("/css", "./internal/templ/css")
 	f.e.Static("/js", "./internal/templ/js")

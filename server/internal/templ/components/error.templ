@@ -14,3 +14,15 @@ templ ErrorPageMsg(msg string) {
 		{ msg }
 	</div>
 }
+
+templ ErrorCardMsg(msg string) {
+	<div class={ cardClass }>
+		<div
+			class="card-body alert alert-danger d-flex justify-content-center align-items-center"
+			role="alert"
+			style="margin: 0"
+		>
+			{ msg }
+		</div>
+	</div>
+}

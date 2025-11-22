@@ -1,5 +1,4 @@
 package storage
-	
 
 import (
 	"database/sql"
@@ -32,7 +31,7 @@ type Filters struct {
 	EndTime   int64
 	Tags      *[]Tag
 	Limit     int64
-	Glob string
+	Glob      string
 }
 
 func NewSqliteStorage(db *sql.DB) *Storage {
@@ -44,7 +43,7 @@ func NewSqliteStorage(db *sql.DB) *Storage {
 // Requires all of the values in Expense, user ID, and Tag ID
 func (s *Storage) AddExpense(d *Expense, u *User, t *Tag) error {
 	query := `INSERT INTO "Expenses"("tag_id","user_id","name","description","cost","created_at")
-			  VALUES (?, ?, ?, ?, ?);`
+			  VALUES (?, ?, ?, ?, ?, ?);`
 	currTime := time.Now().Unix()
 	_, err := s.db.Exec(query, t.Id, u.Id, d.Name, d.Description, d.Cost, currTime)
 	if err != nil {
@@ -105,7 +104,6 @@ func (s *Storage) DeleteExpense(d *Expense, t *Tag, u *User) error {
 	return nil
 }
 
-
 // Requires Tag ID
 func (s *Storage) DeleteTag(t *Tag, u *User) error {
 	query := ``
@@ -120,7 +118,7 @@ func (s *Storage) DeleteTag(t *Tag, u *User) error {
 
 // Requires user ID
 func (s *Storage) GetAllTags(u *User) (*[]Tag, error) {
-	query := `SELECT ("id", "name") FROM "Tags" WHERE "user_id"=?;`
+	query := `SELECT "id", "name" FROM "Tags" WHERE "user_id"=?;`
 	rows, err := s.db.Query(query, u.Id)
 
 	if err != nil {
@@ -142,7 +140,7 @@ func (s *Storage) GetAllTags(u *User) (*[]Tag, error) {
 
 // Requires user id and tag name
 func (s *Storage) GetTagId(t *Tag, u *User) error {
-	query := `SELECT ("id", "name") FROM "Tags" WHERE "user_id"=? AND "name"=?;`
+	query := `SELECT "id", "name" FROM "Tags" WHERE "user_id"=? AND "name"=?;`
 	row := s.db.QueryRow(query, u.Id, t.Name)
 
 	if row.Err() != nil {
@@ -161,7 +159,7 @@ func (s *Storage) GetTagId(t *Tag, u *User) error {
 
 // Requires user id and tag id
 func (s *Storage) GetTagName(t *Tag, u *User) error {
-	query := `SELECT ("id", "name") FROM "Tags" WHERE "user_id"=? AND "id"=?;`
+	query := `SELECT "id", "name" FROM "Tags" WHERE "user_id"=? AND "id"=?;`
 	row := s.db.QueryRow(query, u.Id, t.Id)
 
 	if row.Err() != nil {
@@ -179,8 +177,8 @@ func (s *Storage) GetTagName(t *Tag, u *User) error {
 
 // Requires UserID
 func (s *Storage) GetAllExpenses(t *Tag, u *User) (*[]Expense, error) {
-	query := `SELECT ("id", "tag_id", "name", "description", "cost")
-			  FROM "Tags" WHERE "user_id"=?;`
+	query := `SELECT "id", "tag_id", "name", "description", "cost", "created_at"
+			  FROM "Expenses" WHERE "user_id"=?;`
 	rows, err := s.db.Query(query, u.Id)
 
 	if err != nil {
@@ -190,20 +188,20 @@ func (s *Storage) GetAllExpenses(t *Tag, u *User) (*[]Expense, error) {
 	expenses := make([]Expense, 0)
 	for rows.Next() {
 		var expense Expense
-		if err := rows.Scan(&expense.Id, &t.Id, &expense.Name, &expense.Description); err != nil {
+		if err := rows.Scan(&expense.Id, &t.Id, &expense.Name, &expense.Description, &expense.Cost,
+			&expense.CreatedAt); err != nil {
 			log.Error(err)
 			return nil, err
 		}
 		expenses = append(expenses, expense)
 	}
-
 	return &expenses, nil
 }
 
 // NOT FINSIHED
 func (s *Storage) GetTagExpenses(d *Expense, t *Tag, u *User) error {
 	query := `SELECT ("id", "name", "description", "cost", "created_at")
-			  FROM "Tags" WHERE "user_id"=? AND "tag_id"=?;`
+			  FROM "Expenses" WHERE "user_id"=? AND "tag_id"=?;`
 	row := s.db.QueryRow(query, u.Id, t.Id)
 
 	if row.Err() != nil {
@@ -263,7 +261,7 @@ func (s *Storage) GetExpenses(d *Expense, u *User, f *Filters) error {
 
 	query = query + ` ORDER BY "created_at";`
 
-	var row *sql.Row 
+	var row *sql.Row
 	if glob {
 		row = s.db.QueryRow(query, u.Id, f.Glob)
 	} else {

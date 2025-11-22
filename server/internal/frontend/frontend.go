@@ -38,6 +38,24 @@ func RunFrontend(store *storage.Storage, e *echo.Echo){
 			fmt.Println("Can't update session Id")
 			log.Fatal(err1)
 		}
+		tag := storage.Tag{
+			Name: "test",
+		}
+		expense := storage.Expense{
+			Name: "test",
+			Cost: 23,
+			Description: "",
+		}
+		err1 = store.CreateTag(&tag, &user)
+		if err1 != nil {
+			fmt.Println("Can't create Tag")
+			log.Fatal(err1)
+		}
+		err1 = store.AddExpense(&expense, &user, &tag)
+		if err1 != nil {
+			fmt.Println("Can't create Expense")
+			log.Fatal(err1)
+		}
 	} else if err != nil {
 		log.Fatal(err)
 	}

@@ -1,19 +1,32 @@
 package components
 
+import (
+"SpendingTracker/internal/storage"
+"time"
+)
+
 templ AddExpense() {
-	<div class="card" style="width: 20rem;">
-		<form hx-post="/post/addExpense" class="form-control card-body" id="addExpense" hx-swap="innerHTML">
+	<div id="addExpense" class={ cardClass }>
+		<form
+			class="form-control card-body"
+			hx-post="/user/post/addExpense"
+			hx-swap="outerHTML"
+			hx-target="#listExpenses"
+			hx-target-error="#invalid"
+			hx-on::after-request="if(event.detail.successful) this.reset()"
+			autocomplete="off"
+		>
 			<h5 class="card-title">Add Expense</h5>
 			<label for="expenseName" class="form-label">Name</label>
 			<input
 				type="text"
 				name="name"
 				id="expenseName"
-				placeholder="Expense Name"
+				placeholder="Name"
 				class="form-control"
 				required
 			/>
-			<label for="expenseCost" class="form-label">Expense Cost</label>
+			<label for="expenseCost" class="form-label">Cost</label>
 			<input
 				type="number"
 				name="cost"
@@ -22,8 +35,11 @@ templ AddExpense() {
 				class="form-control"
 				required
 			/>
+			<div style="color: var(--bs-danger);">
+				<div id="invalid"></div>
+			</div>
 			<div class="mt-2">
-				<button type="submit" class="btn btn-primary">Add Expense</button>
+				<button hx-target-error="#invalid" hx-swap="innerHTML" type="submit" class="btn btn-primary">Add Expense</button>
 			</div>
 		</form>
 	</div>
@@ -43,6 +59,17 @@ templ TotalSpent(spent uint) {
 	</div>
 }
 
-templ AllExpenses() {
-	<div></div>
+templ AllExpenses(expenses *[]storage.Expense) {
+	<div id="listExpenses" class="mx-auto">
+        <h3>List of Expenses</h3>
+		if expenses == nil {
+			<h4>No Expenses Yet</h4>
+		} else {
+			<ul>
+				for _, expense := range *expenses {
+					<li>{ expense.Name } { expense.Cost } { time.Unix(expense.CreatedAt, 0).UTC().String() }</li>
+				}
+			</ul>
+		}
+	</div>
 }

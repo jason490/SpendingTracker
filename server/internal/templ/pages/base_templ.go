@@ -65,7 +65,7 @@ func Base(cssDirectories []string, jsDirectories []string, title string) templ.C
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</title><script>\n                (() => {\n                    'use strict'\n\n                    const getStoredTheme = () => localStorage.getItem('theme')\n                    const setStoredTheme = theme => localStorage.setItem('theme', theme)\n\n                    const getPreferredTheme = () => {\n                      const storedTheme = getStoredTheme()\n                      if (storedTheme) {\n                        return storedTheme\n                      }\n\n                      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'\n                    }\n\n                    const setTheme = theme => {\n                      if (theme === 'auto') {\n                        document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))\n                      } else {\n                        document.documentElement.setAttribute('data-bs-theme', theme)\n                      }\n                    }\n\n                    setTheme(getPreferredTheme())\n                })()\n            </script></head><body><div class=\"error\"></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</title><script>\n                (() => {\n                    'use strict'\n\n                    const getStoredTheme = () => localStorage.getItem('theme')\n                    const setStoredTheme = theme => localStorage.setItem('theme', theme)\n\n                    const getPreferredTheme = () => {\n                      const storedTheme = getStoredTheme()\n                      if (storedTheme) {\n                        return storedTheme\n                      }\n\n                      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'\n                    }\n\n                    const setTheme = theme => {\n                      if (theme === 'auto') {\n                        document.documentElement.setAttribute('data-bs-theme', (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))\n                      } else {\n                        document.documentElement.setAttribute('data-bs-theme', theme)\n                      }\n                    }\n\n                    setTheme(getPreferredTheme())\n                })()\n            </script></head><body hx-ext=\"response-targets\"><div class=\"error\"></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -73,7 +73,7 @@ func Base(cssDirectories []string, jsDirectories []string, title string) templ.C
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<script src=\"https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js\" integrity=\"sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz\" crossorigin=\"anonymous\"></script><script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI\" crossorigin=\"anonymous\"></script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<script src=\"https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js\" integrity=\"sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz\" crossorigin=\"anonymous\"></script><script src=\"https://cdn.jsdelivr.net/npm/htmx-ext-response-targets@2.0.4\" integrity=\"sha384-T41oglUPvXLGBVyRdZsVRxNWnOOqCynaPubjUVjxhsjFTKrFJGEMm3/0KGmNQ+Pg\" crossorigin=\"anonymous\"></script><script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI\" crossorigin=\"anonymous\"></script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -85,7 +85,7 @@ func Base(cssDirectories []string, jsDirectories []string, title string) templ.C
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("/js/pages/" + jsDirectory)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templ/pages/base.templ`, Line: 51, Col: 44}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templ/pages/base.templ`, Line: 52, Col: 44}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
