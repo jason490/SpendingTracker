@@ -176,6 +176,38 @@ func (s *Storage) GetTagName(t *Tag, u *User) error {
 }
 
 // Requires UserID
+func (s *Storage) GetMonthExpenses(t *Tag, u *User) (*[]Expense, error) {
+
+	year := time.Now().Year()
+	month := time.Now().Month()
+	firstDayInMonth := time.Date(year, month, 0, 0, 0, 0, 0, time.UTC).Unix()
+	lastDayInMonth := time.Date(year, month+1, 0, 23, 59, 59, 0, time.UTC).Unix()
+
+	query := `SELECT "id", "tag_id", "name", "description", "cost", "created_at"
+			  FROM "Expenses" WHERE "user_id"=? AND "created_at" BETWEEN ? and ?
+			  ORDER BY "created_at";`
+
+	rows, err := s.db.Query(query, u.Id, firstDayInMonth, lastDayInMonth)
+
+	if err != nil {
+		log.Error(err)
+		return nil, err
+	}
+
+	expenses := make([]Expense, 0)
+	for rows.Next() {
+		var expense Expense
+		if err := rows.Scan(&expense.Id, &t.Id, &expense.Name, &expense.Description, &expense.Cost,
+			&expense.CreatedAt); err != nil {
+			log.Error(err)
+			return nil, err
+		}
+		expenses = append(expenses, expense)
+	}
+	return &expenses, nil
+}
+
+// Requires UserID
 func (s *Storage) GetAllExpenses(t *Tag, u *User) (*[]Expense, error) {
 	query := `SELECT "id", "tag_id", "name", "description", "cost", "created_at"
 			  FROM "Expenses" WHERE "user_id"=?;`
@@ -198,7 +230,7 @@ func (s *Storage) GetAllExpenses(t *Tag, u *User) (*[]Expense, error) {
 	return &expenses, nil
 }
 
-// NOT FINSIHED
+// Gets all the expenses from the tags (Not finished)
 func (s *Storage) GetTagExpenses(d *Expense, t *Tag, u *User) error {
 	query := `SELECT ("id", "name", "description", "cost", "created_at")
 			  FROM "Expenses" WHERE "user_id"=? AND "tag_id"=?;`

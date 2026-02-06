@@ -10,7 +10,6 @@ import templruntime "github.com/a-h/templ/runtime"
 
 const (
 	cardClass = "card h-100 w-100 mx-auto"
-	testing   = "hello"
 )
 
 func color() templ.CSSClass {

@@ -55,13 +55,13 @@ func UserHomePage() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div><div class=\"col\"><div hx-get=\"/user/get/monthExpense\" hx-trigger=\"load\" hx-swap=\"outerHTML\" hx-target=\"this\" hx-target-error=\"this\"></div></div><div class=\"col\"><div>Total Expenses</div></div></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div><div class=\"col\"><div></div></div></div><div class=\"row\"><div class=\"col\"><div hx-get=\"/user/get/monthExpense\" hx-trigger=\"load\" hx-swap=\"outerHTML\" hx-target=\"this\" hx-target-error=\"this\"></div></div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
-		templ_7745c5c3_Err = Base([]string{}, []string{}, "Home").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Base([]string{}, []string{"main.js"}, "Home").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

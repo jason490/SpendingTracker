@@ -3,13 +3,19 @@ package pages
 import "SpendingTracker/internal/templ/components"
 
 templ UserHomePage() {
-	@Base([]string{}, []string{}, "Home") {
+	@Base([]string{}, []string{"main.js"}, "Home") {
 		@UserNavBar()
 		<div class="container">
 			<div class="row">
 				<div class="col">
 					@components.AddExpense()
 				</div>
+				<div class="col">
+					<div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
 				<div class="col">
 					<div
 						hx-get="/user/get/monthExpense"
@@ -18,11 +24,6 @@ templ UserHomePage() {
 						hx-target="this"
 						hx-target-error="this"
 					></div>
-				</div>
-				<div class="col">
-					<div>
-                    Total Expenses
-                    </div>
 				</div>
 			</div>
 		</div>

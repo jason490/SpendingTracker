@@ -1,8 +1,8 @@
 package components
 
 import (
-"SpendingTracker/internal/storage"
-"time"
+	"SpendingTracker/internal/storage"
+	"time"
 )
 
 templ AddExpense() {
@@ -12,7 +12,7 @@ templ AddExpense() {
 			hx-post="/user/post/addExpense"
 			hx-swap="outerHTML"
 			hx-target="#listExpenses"
-			hx-target-error="#invalid"
+			hx-target-error="#error"
 			hx-on::after-request="if(event.detail.successful) this.reset()"
 			autocomplete="off"
 		>
@@ -36,17 +36,17 @@ templ AddExpense() {
 				required
 			/>
 			<div style="color: var(--bs-danger);">
-				<div id="invalid"></div>
+				<div id="error"></div>
 			</div>
 			<div class="mt-2">
-				<button hx-target-error="#invalid" hx-swap="innerHTML" type="submit" class="btn btn-primary">Add Expense</button>
+				<button type="submit" class="btn btn-primary">Add Expense</button>
 			</div>
 		</form>
 	</div>
 }
 
 templ TotalSpentThisMonth(spent uint) {
-	<div class="card" style="width: 20rem;" hx-get="" hx-trigger="from:#addExpense">
+	<div class={ cardClass } hx-get="" hx-trigger="from:#addExpense">
 		<h5 class="card-title">Total Spent This Month</h5>
 		<h6 class="card-title">{ spent }</h6>
 	</div>
@@ -59,17 +59,33 @@ templ TotalSpent(spent uint) {
 	</div>
 }
 
-templ AllExpenses(expenses *[]storage.Expense) {
-	<div id="listExpenses" class="mx-auto">
-        <h3>List of Expenses</h3>
-		if expenses == nil {
-			<h4>No Expenses Yet</h4>
-		} else {
-			<ul>
-				for _, expense := range *expenses {
-					<li>{ expense.Name } { expense.Cost } { time.Unix(expense.CreatedAt, 0).UTC().String() }</li>
-				}
-			</ul>
-		}
+templ MonthExpenses(expenses *[]storage.Expense) {
+	<div id="listExpenses" class={ cardClass, " mt-2 " }>
+		<div class="card-body">
+			<h5 class="card-title">This Months Expenses</h5>
+			if expenses == nil {
+				<h3>Something went wrong. Please report it! Thank you!</h3>
+			} else if len(*expenses) == 0 {
+				<h3>No Expenses Yet</h3>
+            }else {
+				<div>
+					for _, expense := range *expenses {
+						<div class="row">
+                            <div class="col">
+							    <div class="utc-time">{ time.Unix(expense.CreatedAt, 0).UTC().String() }</div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+							        <div>{ expense.Name }</div>
+                                </div>
+                                <div class="row">
+                                    <div> ${ expense.Cost } </div>
+                                </div>
+                            </div>
+						</div>
+					}
+				</div>
+			}
+		</div>
 	</div>
 }

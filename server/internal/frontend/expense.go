@@ -4,7 +4,6 @@ import (
 	"SpendingTracker/internal/storage"
 	"SpendingTracker/internal/templ/components"
 	"database/sql"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -73,12 +72,12 @@ func (f *Frontend) getAllTags(c echo.Context) error {
 	return c.JSON(http.StatusOK, test)
 }
 
-func (f *Frontend) getTotalExpense(c echo.Context) error {
-	var test Test = Test{
-		Name: "Hello",
-		Test: "World!",
-	}
-	return c.JSON(http.StatusOK, test)
+func (f *Frontend) getMonthCost(c echo.Context) error {
+	return nil
+}
+
+func (f *Frontend) getTotalCost(c echo.Context) error {
+	return nil
 }
 
 func (f *Frontend) getMonthExpense(c echo.Context) error {
@@ -89,15 +88,14 @@ func (f *Frontend) getMonthExpense(c echo.Context) error {
 		log.Error("Unable to convert interface to User struct")
 	}
 	tag := storage.Tag{}
-	expenses, err := f.store.GetAllExpenses(&tag, &user)
-	fmt.Println((*expenses)[0].CreatedAt)
+	expenses, err := f.store.GetMonthExpenses(&tag, &user)
 	if err != nil && err != sql.ErrNoRows {
 		log.Error("Unable to get Expenses")
 		log.Error(err)
 		return Render(c, http.StatusInternalServerError,
 			components.ErrorCardMsg("Server error unable to get expenses"))
 	}
-	return Render(c, http.StatusOK, components.AllExpenses(expenses))
+	return Render(c, http.StatusOK, components.MonthExpenses(expenses))
 }
 
 func (f *Frontend) getAllExpenses(c echo.Context) error {
